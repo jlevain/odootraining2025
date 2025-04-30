@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record forcecreate="True" id="estate_manager" model="res.groups">
+            <field name="name">Estate Manager</field>
+        </record>
+    </data>
+</odoo>
