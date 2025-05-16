@@ -2,3 +2,5 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 estate.access_real_estate,access_real_estate,estate.model_real_estate,base.group_user,1,1,1,1
 estate.access_real_estate_manager,access_real_estate_manager,estate.model_real_estate,estate.estate_manager,1,1,1,1
 estate.access_real_estate_type,access_real_estate_type,estate.model_real_estate_type,base.group_user,1,1,1,1
+estate.access_real_estate_tags,access_real_estate_tags,estate.model_real_estate_tags,base.group_user,1,1,1,1
+estate.access_real_estate_offer,access_real_estate_offer,estate.model_real_estate_offer,base.group_user,1,1,1,1

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <data noupdate="1">
-        <record forcecreate="True" id="estate_1" model="real.estate">
-            <field name="name">TEST</field>
-        </record>
-    </data>
-</odoo>
