@@ -88,7 +88,6 @@ class RealEstate(models.Model):
     def sold(self):
         if self.state == "C":
             raise UserError(_("Offer already CANCELED"))
-            #raise RedirectWarning("l'offre est déjà CANCELED", 'action', "Show ")
         if self.state != "C":
             self.state = "S"
         return True

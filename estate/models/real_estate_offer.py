@@ -41,12 +41,15 @@ class RealEstateOffer(models.Model):
             dateDeadline = (record.date_deadline - record.create_date.date())
             record.validity = dateDeadline.days
 
+    @api.depends("status")
     def offer_accepted(self):
         for record in self:
-            record.name = "Something"
+            record.status = "A"
+            record.selling_price = ''
         return True
 
+    @api.depends("status")
     def offer_refused(self):
         for record in self:
-            record.name = "Something"
+            record.status = "R"
         return True
