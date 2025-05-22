@@ -68,10 +68,8 @@
                 <sheet>
                     <group>
                         <div class="oe_title">
-                            <h1>
-                                <field name="name"/>
-                                <field name="tag_ids" widget="many2many_tags"/>
-                            </h1>
+                            <h1><field name="name"/></h1>
+                            <field name="tag_ids" widget="many2many_tags"/>
                         </div>
                     </group>
                     <group>
@@ -80,6 +78,7 @@
                             <field name="date_availability"/>
                         </group>
                         <group>
+                            <field name="expected_price" />
                             <field name="best_price" />
                             <field name="selling_price" />
                         </group>
@@ -101,8 +100,6 @@
                                 </div>
                                 <field name="garden_orientation" />
                                 <field name="property_type_id" />
-                                <field name="buyer_id" />
-                                <field name="salesperson_id" />
                             </group>
                         </page>
 
@@ -118,6 +115,13 @@
                                     <field name="status"/>
                                 </list>
                             </field>
+                        </page>
+
+                        <page string="Details">
+                            <group>
+                                <field name="salesperson_id" />
+                                <field name="buyer_id" />
+                            </group>
                         </page>
 
                     </notebook>

@@ -6,7 +6,7 @@ import logging
 import random
 
 from odoo.addons.test_import_export.models.models_export_impex import compute_fn
-from odoo.exceptions import RedirectWarning, UserError
+from odoo.exceptions import RedirectWarning, UserError, ValidationError
 
 
 class RealEstate(models.Model):
@@ -30,7 +30,11 @@ class RealEstate(models.Model):
     )
 
     expected_price = fields.Float()
-    selling_price = fields.Float(copy=False)
+    selling_price = fields.Float(
+        string="Selling price",
+        store=False,
+        compute='_show_accepted_price',
+    )
     bedrooms = fields.Integer(default=2)
     living_area = fields.Integer()
     facades = fields.Integer()
@@ -63,7 +67,7 @@ class RealEstate(models.Model):
         default="N"
         )
     property_type_id = fields.Many2one("real.estate.type", string="Type")
-    buyer_id = fields.Many2one('res.partner', required=True, string='Buyer', index=True)
+    buyer_id = fields.Many2one('res.partner', string='Buyer', index=True)
     salesperson_id = fields.Many2one('res.users', string='Salesperson', index=True, default=lambda self: self.env.user)
 
     @api.depends("garden", "living_area", "garden_area")
@@ -85,17 +89,32 @@ class RealEstate(models.Model):
         for record in self:
             record.best_price = max(record.offer_ids.mapped('price')) if record.offer_ids.mapped('price') else None
 
+    @api.depends("offer_ids.price", "offer_ids.status")
+    def _show_accepted_price(self):
+        for record in self:
+            accepted_offers = record.offer_ids.filtered(lambda o: o.status == 'A')
+            if accepted_offers:
+                record.selling_price = accepted_offers[0].price
+            else:
+                record.selling_price = None
+
     def sold(self):
-        if self.state == "C":
-            raise UserError(_("Offer already CANCELED"))
-        if self.state != "C":
-            self.state = "S"
+        for record in self:
+            if record.state == "C" or record.state == "S":
+                raise UserError(_("Offer already CANCELED or SOLD"))
+            record.state = "S"
         return True
 
     @api.depends('state')
     def cancel(self):
-        if self.state == "S":
-            raise UserError(_("Offer already SOLD"))
-        if self.state != "S":
-            self.state = "C"
+        for record in self:
+            if record.state == "S" or record.state == "C":
+                raise UserError(_("Offer already SOLD or CANCEL"))
+            record.state = "C"
         return True
+
+    @api.constrains('expected_price')
+    def _check_expected_price(self):
+        for record in self:
+            if record.expected_price < 0:
+                raise ValidationError("Field expected price must be positiv")
