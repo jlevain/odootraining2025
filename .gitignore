@@ -173,7 +173,7 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-
 *.pub
-
 .gitea
+__pycache__/*
+.idea
