@@ -11,9 +11,16 @@
         <field name="model">real.estate.type</field>
         <field name="arch" type="xml">
             <list string="Channel">
+                <field name="sequence" widget="handle"/>
                 <field name="name"/>
+                <field name="property_ids">
+                    <list>
+                        <field name="name" />
+                    </list>
+                </field>
             </list>
         </field>
+
     </record>
 
 </odoo>

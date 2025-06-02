@@ -10,7 +10,7 @@
         <field name="name">real.estate.offer.view.list</field>
         <field name="model">real.estate.offer</field>
         <field name="arch" type="xml">
-            <list string="Channel">
+            <list>
                 <field name="name"/>
             </list>
         </field>
