@@ -4,6 +4,7 @@ from pprint import pprint
 from dateutil.relativedelta import relativedelta
 import logging
 import random
+import ipdb
 
 from odoo.addons.test_import_export.models.models_export_impex import compute_fn
 from odoo.exceptions import RedirectWarning, UserError, ValidationError
@@ -12,13 +13,14 @@ from odoo.exceptions import RedirectWarning, UserError, ValidationError
 class RealEstate(models.Model):
     _name = "real.estate"
     _description: str = 'Real Estate'
+    _order = "id desc"
 
     name = fields.Char(default="House", required=True)
     description = fields.Text()
     postcode = fields.Char()
 
     addmonths = date.today() + relativedelta(months=3)
-    date_availability = fields.Date(string="Date de disponibilité", default=addmonths, copy=False)
+    date_availability = fields.Date(string="Date de disponibilité", default=addmonths, copy=False, )
 
     tag_ids = fields.Many2many("real.estate.tags", string="Tags")
 

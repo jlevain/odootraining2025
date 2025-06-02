@@ -11,6 +11,7 @@ from odoo.exceptions import UserError, ValidationError
 class RealEstateOffer(models.Model):
     _name = "real.estate.offer"
     _description = 'Offer'
+    _order = "price desc"
 
     name = fields.Char(default="Offer", required=True)
     price = fields.Float()
